@@ -118,7 +118,7 @@ func (opts *MongoSessionOpts) configureDialInfoIfRequired(dialInfo *mgo.DialInfo
 				log.Errorf("Could not connect to %v. Got: %v", addr, err)
 				return nil, err
 			}
-			if config.InsecureSkipVerify && opts.TLSHostnameValidation {
+			if config.InsecureSkipVerify && opts.TLSCertificateValidation {
 				err = enrichWithOwnChecks(conn, config)
 				if err != nil {
 					log.Errorf("Could not disable hostname validation. Got: %v", err)
