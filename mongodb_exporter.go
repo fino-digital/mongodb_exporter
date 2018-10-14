@@ -60,9 +60,10 @@ var (
 	tlsCAF         = flag.String("mongodb.tls-ca", "", "Path to PEM file that contains the CAs that are trusted for server connections.\n"+
 		"    \tIf provided: MongoDB servers connecting to should present a certificate signed by one of this CAs.\n"+
 		"    \tIf not provided: System default CAs are used.")
-	tlsDisableHostnameValidationF = flag.Bool("mongodb.tls-disable-hostname-validation", false, "Disable hostname validation for server connection.")
-	maxConnectionsF               = flag.Int("mongodb.max-connections", 1, "Max number of pooled connections to the database.")
-	testF                         = flag.Bool("test", false, "Check MongoDB connection, print buildInfo() information and exit.")
+	tlsDisableCertificateValidationF = flag.Bool("mongodb.tls-disable-certificate-validation", false, "Disable certificate validation for server connection.")
+	tlsDisableHostnameValidationF    = flag.Bool("mongodb.tls-disable-hostname-validation", false, "Disable hostname validation for server connection.")
+	maxConnectionsF                  = flag.Int("mongodb.max-connections", 1, "Max number of pooled connections to the database.")
+	testF                            = flag.Bool("test", false, "Check MongoDB connection, print buildInfo() information and exit.")
 
 	socketTimeoutF = flag.Duration("mongodb.socket-timeout", 3*time.Second, "Amount of time to wait for a non-responding socket to the database before it is forcefully closed.\n"+
 		"    \tValid time units are 'ns', 'us' (or 'µs'), 'ms', 's', 'm', 'h'.")
@@ -118,6 +119,7 @@ func main() {
 		TLSCertificateFile:       *tlsCertF,
 		TLSPrivateKeyFile:        *tlsPrivateKeyF,
 		TLSCaFile:                *tlsCAF,
+		TLSCertificateValidation: !(*tlsDisableCertificateValidationF),
 		TLSHostnameValidation:    !(*tlsDisableHostnameValidationF),
 		DBPoolLimit:              *maxConnectionsF,
 		CollectDatabaseMetrics:   *collectDatabaseF,

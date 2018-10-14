@@ -37,6 +37,7 @@ type MongodbCollectorOpts struct {
 	TLSCertificateFile       string
 	TLSPrivateKeyFile        string
 	TLSCaFile                string
+	TLSCertificateValidation bool
 	TLSHostnameValidation    bool
 	DBPoolLimit              int
 	CollectDatabaseMetrics   bool
@@ -49,15 +50,16 @@ type MongodbCollectorOpts struct {
 
 func (in *MongodbCollectorOpts) toSessionOps() *shared.MongoSessionOpts {
 	return &shared.MongoSessionOpts{
-		URI:                   in.URI,
-		TLSConnection:         in.TLSConnection,
-		TLSCertificateFile:    in.TLSCertificateFile,
-		TLSPrivateKeyFile:     in.TLSPrivateKeyFile,
-		TLSCaFile:             in.TLSCaFile,
-		TLSHostnameValidation: in.TLSHostnameValidation,
-		PoolLimit:             in.DBPoolLimit,
-		SocketTimeout:         in.SocketTimeout,
-		SyncTimeout:           in.SyncTimeout,
+		URI:                      in.URI,
+		TLSConnection:            in.TLSConnection,
+		TLSCertificateFile:       in.TLSCertificateFile,
+		TLSPrivateKeyFile:        in.TLSPrivateKeyFile,
+		TLSCaFile:                in.TLSCaFile,
+		TLSCertificateValidation: in.TLSCertificateValidation,
+		TLSHostnameValidation:    in.TLSHostnameValidation,
+		PoolLimit:                in.DBPoolLimit,
+		SocketTimeout:            in.SocketTimeout,
+		SyncTimeout:              in.SyncTimeout,
 	}
 }
 

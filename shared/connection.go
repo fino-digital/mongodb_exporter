@@ -45,15 +45,16 @@ func RedactMongoUri(uri string) string {
 }
 
 type MongoSessionOpts struct {
-	URI                   string
-	TLSConnection         bool
-	TLSCertificateFile    string
-	TLSPrivateKeyFile     string
-	TLSCaFile             string
-	TLSHostnameValidation bool
-	PoolLimit             int
-	SocketTimeout         time.Duration
-	SyncTimeout           time.Duration
+	URI                      string
+	TLSConnection            bool
+	TLSCertificateFile       string
+	TLSPrivateKeyFile        string
+	TLSCaFile                string
+	TLSCertificateValidation bool
+	TLSHostnameValidation    bool
+	PoolLimit                int
+	SocketTimeout            time.Duration
+	SyncTimeout              time.Duration
 }
 
 // MongoSession connects to MongoDB and returns ready to use MongoDB session.
@@ -117,7 +118,7 @@ func (opts *MongoSessionOpts) configureDialInfoIfRequired(dialInfo *mgo.DialInfo
 				log.Errorf("Could not connect to %v. Got: %v", addr, err)
 				return nil, err
 			}
-			if config.InsecureSkipVerify {
+			if config.InsecureSkipVerify && opts.TLSHostnameValidation {
 				err = enrichWithOwnChecks(conn, config)
 				if err != nil {
 					log.Errorf("Could not disable hostname validation. Got: %v", err)
