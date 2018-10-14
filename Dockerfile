@@ -9,5 +9,5 @@ FROM quay.io/prometheus/busybox:latest
 
 COPY --from=build /app /bin/mongodb_exporter
 
-EXPOSE      9216
+EXPOSE 9216
 ENTRYPOINT  [ "/bin/mongodb_exporter" ]
